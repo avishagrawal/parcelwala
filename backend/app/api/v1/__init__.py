@@ -1,1 +1,1 @@
-"""API v1 package."""
+"""Domain API routes for customer, partner, restaurant, franchise and admin workflows."""

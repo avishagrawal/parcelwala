@@ -1,22 +1,21 @@
 # ParcelWalaa
 
-Milestone 1 monorepo: FastAPI authentication service, PostgreSQL, SQLAlchemy, Alembic, Docker Compose, and a minimal frontend shell.
+ParcelWalaa is a shared FastAPI/PostgreSQL delivery platform with role-aware applications for customers, delivery partners, restaurants, franchises, and administrators.
 
-## Quick start
+## Applications
+
+The backend exposes shared `/api/v1` APIs for authentication, addresses, parcel booking/tracking, restaurants and menus, food orders, deliveries, notifications, support, and admin dashboard statistics. The existing `frontend/` Next.js shell remains the web entry point; client applications can consume these same APIs for web or mobile delivery.
+
+## Setup
 
 ```bash
 cp .env.example .env
+# replace local placeholder values in .env
 docker compose up --build
-```
-
-The API is available at http://localhost:8000 and Swagger UI at http://localhost:8000/docs.
-
-To seed the development administrator:
-
-```bash
+# in another terminal
+docker compose exec backend alembic upgrade head
 docker compose exec backend python -m app.seed
+docker compose exec backend pytest -q
 ```
 
-Run tests locally with `cd backend && pip install -r requirements.txt && pytest`.
-
-Development demo credentials are controlled by `.env` (`SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD`) and are never committed.
+Swagger: http://localhost:8000/docs. Production uses PostgreSQL; tests use isolated SQLite fixtures. Never commit `.env` or credentials.
